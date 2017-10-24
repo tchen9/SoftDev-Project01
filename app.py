@@ -16,3 +16,14 @@ def home():
 def profile():
     return "profile"
 
+@app.route('/stories')
+def stories():
+    return "stories"
+
+@app.route('/createStory')
+def createStory():
+    return "create story"
+
+@app.route('/contributeStory')
+def contributeStory():
+    return "contribute to story"
