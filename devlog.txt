@@ -1,2 +1,5 @@
 chenT -- 2017-10-22 23:41
       added design.pdf
+siuR -- 2017-10-24 14:51:16
+Added authentication functions
+
