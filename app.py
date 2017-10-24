@@ -8,3 +8,8 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return "hi"
+
+@app.route('/profile')
+def profile():
+    return "profile"
+
