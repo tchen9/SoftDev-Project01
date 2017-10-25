@@ -10,4 +10,5 @@ siuR -- 2017-10-24 14:51:16
 goldmanJ -- 2017-10-24 16:15:05
      added some database methods
 
-
+JonesR — 2017 10-25 14:33:03
+     added basic html files and began work on templates
