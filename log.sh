@@ -11,5 +11,5 @@ if [ $# -eq 2 ]; then
     fi
     echo -e "$ENTRY" >> devlog.txt
 else
-    echo -e "Incorrect number of arguments supplied\nUsage: $ ./log.sh <firstL> <message>"
+    echo -e "Incorrect number of arguments supplied\nUsage: $ ./log.sh <lastF> <message>"
     fi

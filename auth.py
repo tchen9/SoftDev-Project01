@@ -1,4 +1,4 @@
-from Flask import session
+from flask import session
 import hashlib
 import db_methods
 
@@ -9,7 +9,7 @@ import db_methods
 # Returns 0 for success, 1 for incorrect password, 2 for username does not exist
 def login(username, password):
     if username in db_methods.get_users():
-        if hashlib.sha224(password).hexdigest() == db_methods.get_users()[username]:
+        if check_password(username, password):
             session['username'] = username
             return 0
         return 1
@@ -23,7 +23,6 @@ def logged_in():
 def logout():
     if logged_in():
         session.pop('username')
-    return 
 
 # Checks if user's unhashed password is equal to a plaintext string
 def check_password(username, password_to_check):
