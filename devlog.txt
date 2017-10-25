@@ -12,6 +12,10 @@ goldmanJ -- 2017-10-24 16:15:05
 
 JonesR — 2017 10-25 14:33:03
      added basic html files and began work on templates
+
+goldmanJ -- 2017-10-25 14:43:37
+continued writing basic database methods, almost done
+
 siuR -- 2017-10-25 14:52:57
 Start implementing authentication in views
 

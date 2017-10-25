@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "hi"
+    return render_template("index.html")
 
 @app.route('/login')
 def login():
@@ -36,7 +36,10 @@ def stories():
 
 @app.route('/create_story')
 def create_story():
-    return "create story"
+    title = request.form['title']
+    body = request.form['body']
+    return render_template("create_story.html")
+
 
 @app.route('/contribute')
 def contribute_story():
