@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "hi"
+    return render_template("index.html")
 
 @app.route('/profile')
 def profile():
@@ -16,7 +16,9 @@ def stories():
 
 @app.route('/createStory')
 def createStory():
-    return "create story"
+    title = request.form['title']
+    body = request.form['body']
+    return render_template("create_story.html")
 
 @app.route('/contributeStory')
 def contributeStory():

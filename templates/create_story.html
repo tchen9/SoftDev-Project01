@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<form method = "POST" action = "/createStory">
+  Story Title: <input type = "text" name = "title"> <br>
+  Story Body: <input type = "text" name = "body"> <br>
+  <input type = "submit">
+</form>
+
+{% endblock %}
