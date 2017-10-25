@@ -11,8 +11,24 @@ def add_user( user_id, username, password ):
     c.execute(command)
     db.commit()
 
+# add a story to the story table
+def add_story( story_id, title, body, completed ):
+    command = "INSERT INTO stories VALUES( %d, %s, %s, %d )" % (user_id, repr(title), repr(body), completed)
+    c.execute(command)
+    db.commit()
 
-# testing
+# add an edit to the contribution table AND update the story
+# NOTE: doesn't currently mark as completed, will do in the future
+def add_cont( user_id, story_id, addition ):
+    #get the timestamp for the contribution
+    
+    command = "INSERT INTO contributions VALUES( %d, %d, %s, %s )" % (user_id, story_id, repr(timestamp), repr(addition) )
+    c.execute(command)
+    db.commit()
+
+
+    
+# tests
 # add_user(0, "testname", "testpass")
 
 db.commit()
