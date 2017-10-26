@@ -1,5 +1,5 @@
 import sqlite3
-
+import db_methods
 
 db = sqlite3.connect("app.db")
 c = db.cursor()
@@ -20,3 +20,14 @@ db.execute( command )
 # save changes and close
 db.commit()
 db.close()
+
+
+
+
+# PUT INITIAL ADDITIONS HERE:
+
+db_methods.add_user(0, "bob", "pass")
+db_methods.add_user(1, "jim", "random")
+db_methods.add_user(2, "unknown", "bird")
+
+db_methods.add_story(0, "first story", "this is the first story body", 0)
