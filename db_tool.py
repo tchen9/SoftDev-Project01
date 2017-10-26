@@ -1,5 +1,27 @@
 import sqlite3
-from datetime import datetime
+
+
+# make the initial database
+def make_database():
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create a table of users
+    command = "CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT,  password TEXT );"
+    db.execute( command )
+
+    # create a table of stories
+    command = "CREATE TABLE stories (story_id INTEGER PRIMARY KEY, title TEXT, body TEXT, completed INTEGER );"
+    db.execute( command )
+
+    # create a table of contributions
+    command = "CREATE TABLE contributions (user_id INTEGER, story_id INTEGER,  edit_stamp TEXT, edit TEXT );"
+    db.execute( command )
+
+    # save changes and close
+    db.commit()
+    db.close()
+
 
 
 # add a user to the users table
@@ -13,6 +35,7 @@ def add_user( user_id, username, password ):
     # commit and close the database
     db.commit()
     db.close()
+
 
 
 # add a story to the story table
@@ -56,8 +79,20 @@ def add_cont( user_id, story_id, addition ):
     db.close()
 
 
+#===========================================================================================================
 
-# extremely basic tests
-# add_user(0, "john doe", "random")
-# add_story(0, "the room", "this is a bad movie", 0)
-# add_cont( 0, 0, "I really don't reccomend it.")
+
+if __name__ == "__main__":
+    # MAKE THE DATABASE:
+    make_database()
+
+    # TO INCLUDE ANY DATABASE INFORMATION FOR TESTING PURPOSES:
+    # 1. Delete the app.db file
+    # 2. Add the command bellow
+    # 3. Run the file
+
+    add_user(0, "bob", "pass")
+    add_user(1, "jim", "random")
+    add_user(2, "unknown", "bird")
+
+    add_story(0, "first story", "this is the first story body", 0)

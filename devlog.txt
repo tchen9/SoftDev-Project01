@@ -22,3 +22,6 @@ Start implementing authentication in views
 goldmanJ -- 2017-10-26 12:11:22
 Finished add_cont, database is currently at basic functionality
 
+goldmanJ -- 2017-10-26 14:50:34
+made database more modular
+
