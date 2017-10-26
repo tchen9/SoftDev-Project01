@@ -19,3 +19,6 @@ continued writing basic database methods, almost done
 siuR -- 2017-10-25 14:52:57
 Start implementing authentication in views
 
+goldmanJ -- 2017-10-26 12:11:22
+Finished add_cont, database is currently at basic functionality
+
