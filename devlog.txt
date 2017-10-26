@@ -3,7 +3,7 @@ chenT -- 2017-10-22 23:41
 
 chenT -- 2017-10-24 14:45
       added app.py
-      
+
 siuR -- 2017-10-24 14:51:16
      Added authentication functions
 
@@ -22,6 +22,8 @@ Start implementing authentication in views
 goldmanJ -- 2017-10-26 12:11:22
 Finished add_cont, database is currently at basic functionality
 
+siuR -- 2017-10-26 14:50:10
+Added create user functionality
+
 goldmanJ -- 2017-10-26 14:50:34
 made database more modular
-

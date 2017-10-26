@@ -9,11 +9,14 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if not logged_in():
-        
-        result = auth.login()
+    if logged_in():
+        flash('You are already logged in!')
+        return redirect(url_for('profile'))
+    
+    if request.method == 'POST':
+        result = auth.login(request.form['username'], request.form['password'])
         if result == 0:
             flash('You have logged in!')
             return redirect(url_for('profile'))
@@ -23,10 +26,31 @@ def login():
         elif result == 2:
             flash('This username doesn\'t exist.')
             return redirect(url_for('login'))
-        
-    flash('You are already logged in!')
-    return redirect(url_for('index'))
-        
+
+    else:
+        return render_template('login.html')
+
+@app.route('/create_user', methods=['GET', 'POST'])
+def create_user():
+    if logged_in():
+        flash('You are already logged in!')
+        return redirect(url_for('profile'))
+    if request.method == 'POST':
+        result = auth.create(request.form['username'],
+                             request.form['password1'],
+                             request.form['password2'])
+        if result == 0:
+            flash('You have created an account!')
+            return redirect(url_for('profile'))
+        elif result == 1:
+            flash('Your passwords do not match.')
+            return redirect(url_for('create_user'))
+        elif result == 2:
+            flash('This username already exists.')
+            return redirect(url_for('create_user'))
+    else:
+        return render_template('create_user.html')
+    
 @app.route('/profile')
 def profile():
     return "profile"
@@ -43,6 +67,13 @@ def create_story():
 def contribute_story():
     return "contribute to story"
 
+<<<<<<< HEAD
 if __name__ == "__main__":
 	app.debug = True
 app.run()
+=======
+if __name__ == '__main__':
+    app.debug = True
+    app.run()
+
+>>>>>>> cd3237568b1e85f392ae91675b606d8a702fee07
