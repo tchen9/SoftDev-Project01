@@ -1,5 +1,5 @@
 import sqlite3
-
+from datetime import datetime
 
 # make the initial database
 def make_database():
@@ -15,7 +15,7 @@ def make_database():
     db.execute( command )
 
     # create a table of contributions
-    command = "CREATE TABLE contributions (user_id INTEGER, story_id INTEGER,  edit_stamp TEXT, edit TEXT );"
+    command = "CREATE TABLE contributions (user_id INTEGER, story_id INTEGER,  timestamp TEXT, edit TEXT );"
     db.execute( command )
 
     # save changes and close
@@ -36,7 +36,7 @@ def add_user( username, password ):
         user_id = row[0]
 
     # do the command
-    command = "INSERT INTO users VALUES( %d, %s, %s );" % (user_id, repr(username), repr(password))
+    command = "INSERT INTO users VALUES( %d, \"%s\", \"%s\" );" % (user_id, username, password)
     c.execute(command)
 
     # commit and close the database
@@ -58,7 +58,7 @@ def add_story( title, body ):
         story_id = row[0]
 
     # do the command
-    command = "INSERT INTO stories VALUES( %d, %s, %s, 0 );" % (story_id,repr(title), repr(body) )
+    command = "INSERT INTO stories VALUES( %d, \"%s\", \"%s\", 0 );" % (story_id, title, body )
     c.execute(command)
 
     # commit and close the database
@@ -67,8 +67,8 @@ def add_story( title, body ):
 
 
 
+
 # add an edit to the contribution table AND update the story
-# NOTE: doesn't currently mark as completed, will do in the future
 def add_cont( user_id, story_id, addition ):
     # open the database
     db = sqlite3.connect("app.db")
@@ -77,8 +77,9 @@ def add_cont( user_id, story_id, addition ):
 
     # get the timestamp for the contribution
     timestamp = str( datetime.now() )
+
     # making the actual contribution
-    command = "INSERT INTO contributions VALUES( %d, %d, %s, %s );" % (user_id, story_id, repr(timestamp), repr(addition) )
+    command = "INSERT INTO contributions VALUES( %d, %d, \"%s\", \"%s\" );" % (user_id, story_id, timestamp, addition )
     c.execute(command)
 
     # update the body of the story
@@ -87,6 +88,16 @@ def add_cont( user_id, story_id, addition ):
         body = row[0] + "\n\n" + addition # add the new text
     command = "UPDATE stories SET body = \"%s\" WHERE stories.story_id = %d;" % ( body, story_id )
     c.execute(command)
+
+    # check to see if a story is completed or not
+    # get the number of contributions
+    command = "SELECT count(*) FROM contributions WHERE contributions.story_id = %d;" % ( story_id )
+    for row in c.execute(command):
+        count = row[0]
+    # if the number of contributions is >= 3, set the status to completed
+    if (count >= 3):
+        command = "UPDATE stories SET completed = 1 WHERE stories.story_id = %d;" % ( story_id )
+        c.execute(command)
 
     # commit and close the database
     db.commit()
@@ -109,4 +120,9 @@ if __name__ == "__main__":
     add_user("jim", "random")
     add_user("unknown", "bird")
 
-    add_story("first story", "this is the first story body")
+    add_story("first story", "First line!")
+    add_story("second story", "random text is fun!")
+
+    add_cont(0, 0, "Second line!")
+    add_cont(1, 0, "Third line!")
+    add_cont(2, 0, "Fourth line!")

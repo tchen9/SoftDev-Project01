@@ -27,3 +27,6 @@ Added create user functionality
 
 goldmanJ -- 2017-10-26 14:50:34
 made database more modular
+goldmanJ -- 2017-10-26 18:32:08
+Automated id assignment and updating completion status
+
