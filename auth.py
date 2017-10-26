@@ -17,7 +17,10 @@ def login(username, password):
 
 # Returns whether a user is logged in
 def logged_in():
-    return session['username'] is not None
+    try:
+        return session['username'] is not None
+    except KeyError:
+        return False
 
 # Logs a user out if they are logged in
 def logout():
@@ -31,3 +34,14 @@ def check_password(username, password_to_check):
 # Sets the user's password to a hashed version of the input
 def set_password(username, new_password):
     return db_methods.set_user_password(hashlib.sha224(new_password).hexdigest())
+
+# Attempts to create a user given their username, password, and retyped password
+# Returns 0 for success, 1 for unmatching passwords, 2 for username already exists
+def create(username, password1, password2):
+    if not username in db_methods.get_users():
+        if password1 == password2:
+            db_methods.add_user(username, password1)
+            login(username, password1)
+            return 0
+        return 1
+    return 2
