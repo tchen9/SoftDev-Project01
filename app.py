@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-import db_methods
+import db_tool
 
 app = Flask(__name__)
 
@@ -67,13 +67,6 @@ def create_story():
 def contribute_story():
     return "contribute to story"
 
-<<<<<<< HEAD
-if __name__ == "__main__":
-	app.debug = True
-app.run()
-=======
 if __name__ == '__main__':
     app.debug = True
     app.run()
-
->>>>>>> cd3237568b1e85f392ae91675b606d8a702fee07
