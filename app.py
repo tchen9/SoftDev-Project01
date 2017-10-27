@@ -53,11 +53,11 @@ def create_user():
     
 @app.route('/profile')
 def profile():
-    return "profile"
+    return render_template("profile.html")
 
 @app.route('/stories')
 def stories():
-    return "stories"
+    return render_template("stories.html")
 
 @app.route('/create_story')
 def create_story():
