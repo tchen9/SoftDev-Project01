@@ -1,6 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
+import db_methods
 
 app = Flask(__name__)
 
@@ -36,11 +37,12 @@ def stories():
 
 @app.route('/create_story')
 def create_story():
-    title = request.form['title']
-    body = request.form['body']
     return render_template("create_story.html")
-
 
 @app.route('/contribute')
 def contribute_story():
     return "contribute to story"
+
+if __name__ == "__main__":
+	app.debug = True
+app.run()
