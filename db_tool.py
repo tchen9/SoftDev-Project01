@@ -73,7 +73,6 @@ def add_cont( user_id, story_id, addition ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
-    # do the command
 
     # get the timestamp for the contribution
     timestamp = str( datetime.now() )
@@ -104,6 +103,65 @@ def add_cont( user_id, story_id, addition ):
     db.close()
 
 
+# returns a dictionary with fields as keys and values as the records for that user_id
+def get_user( user_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    user = {}
+
+    # get the user info
+    command = "SELECT username, password FROM users WHERE users.user_id = %d;" % (user_id)
+    for row in c.execute(command):
+        user["username"] = row[0]
+        user["password"] = row[1]
+
+    # commit and close the database
+    db.commit()
+    db.close()
+
+    return user
+
+
+# returns a dictionary with keys as user_ids and values as dictionaries for those users
+def get_users():
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    users = {}
+
+    # get the data
+    command = "SELECT * FROM users;"
+    for row in c.execute(command):
+        user = {}
+        user[ "username" ] = row[1]
+        user[ "password" ] = row[2]
+        users[ row[0] ] = user
+
+    # commit and close the database
+    db.commit()
+    db.close()
+
+    return users
+
+
+def get_username( id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # commit and close the database
+    db.commit()
+    db.close()
+
+
+# TODO: get_username( id ):
+# TODO: get_pass( id ):
+# TODO: story stuff
 #===========================================================================================================
 
 
@@ -126,3 +184,9 @@ if __name__ == "__main__":
     add_cont(0, 0, "Second line!")
     add_cont(1, 0, "Third line!")
     add_cont(2, 0, "Fourth line!")
+
+    print( "Getting user 0:\n")
+    print( get_user(0) )
+
+    print( "Getting all users:\n" )
+    print( get_users() )
