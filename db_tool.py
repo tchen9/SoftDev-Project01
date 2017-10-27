@@ -149,18 +149,42 @@ def get_users():
     return users
 
 
-def get_username( id ):
+# returns the username associated with a given user_id
+def get_username( user_id ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
+
+    # get the username
+    command = "SELECT username FROM users WHERE users.user_id = %d;" % (user_id)
+    for row in c.execute( command ):
+        name = row[0]
 
     # commit and close the database
     db.commit()
     db.close()
 
+    return name
 
-# TODO: get_username( id ):
-# TODO: get_pass( id ):
+# returns the password associated with a given user_id (hashed)
+def get_pass( user_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # get the username
+    command = "SELECT password FROM users WHERE users.user_id = %d;" % (user_id)
+    for row in c.execute( command ):
+        password = row[0]
+
+    # commit and close the database
+    db.commit()
+    db.close()
+
+    return password
+
+
+
 # TODO: story stuff
 #===========================================================================================================
 
@@ -185,8 +209,17 @@ if __name__ == "__main__":
     add_cont(1, 0, "Third line!")
     add_cont(2, 0, "Fourth line!")
 
-    print( "Getting user 0:\n")
+
+'''
+    print( "Getting user 0:")
     print( get_user(0) )
 
-    print( "Getting all users:\n" )
+    print( "Getting all users:" )
     print( get_users() )
+
+    print( "Getting username for user 1:")
+    print( get_username(1) )
+
+    print( "Getting password for user 2:")
+    print( get_pass(2) )
+'''

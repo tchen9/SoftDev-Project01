@@ -37,3 +37,6 @@ Automated id assignment and updating completion status
 jonesR -- 2017-10-27 11:47:49
 edited html pages and linked them together usign app.py
 
+goldmanJ -- 2017-10-27 14:03:12
+Wrote accesor methods for user info
+
