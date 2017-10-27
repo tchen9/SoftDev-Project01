@@ -163,8 +163,8 @@ def get_username( user_id ):
     # commit and close the database
     db.commit()
     db.close()
-
     return name
+
 
 # returns the password associated with a given user_id (hashed)
 def get_pass( user_id ):
@@ -180,12 +180,44 @@ def get_pass( user_id ):
     # commit and close the database
     db.commit()
     db.close()
-
     return password
 
 
+# returns the title associated with a given story_id
+def get_story_title( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
 
-# TODO: story stuff
+    # get the username
+    command = "SELECT title FROM stories WHERE stories.story_id = %d;" % (story_id)
+    for row in c.execute( command ):
+        title = row[0]
+
+    # commit and close the database
+    db.commit()
+    db.close()
+    return title
+
+
+# returns the title associated with a given story_id
+def get_story_body( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # get the username
+    command = "SELECT body FROM stories WHERE stories.story_id = %d;" % (story_id)
+    for row in c.execute( command ):
+        body = row[0]
+
+    # commit and close the database
+    db.commit()
+    db.close()
+    return body
+
+
+
 #===========================================================================================================
 
 
@@ -222,4 +254,9 @@ if __name__ == "__main__":
 
     print( "Getting password for user 2:")
     print( get_pass(2) )
+
+    print( "Getting title for story 0:" )
+    print( get_story_title(0) )
+    print( "Getting body for story 0:" )
+    print( get_story_body(0) )
 '''

@@ -40,3 +40,6 @@ edited html pages and linked them together usign app.py
 goldmanJ -- 2017-10-27 14:03:12
 Wrote accesor methods for user info
 
+goldmanJ -- 2017-10-27 14:20:21
+wrote accessor methods for stories
+
