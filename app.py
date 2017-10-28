@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-import db_tool
+from db_tool import get_stories
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "TH15 15 4 53CR3T K3Y"
@@ -67,14 +67,15 @@ def profile():
 
 @app.route('/stories')
 def stories():
-    return render_template('stories.html', title = 'Stories')
+    stories = get_stories()
+    return render_template('stories.html', title = 'Stories', stories = stories)
 
 @app.route('/create_story')
 def create_story():
     return render_template('create_story.html', title = 'Create a Story')
 
 @app.route('/contribute')
-def contribute_story():
+def contribute():
     return "contribute to story"
 
 if __name__ == '__main__':

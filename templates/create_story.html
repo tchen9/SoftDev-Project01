@@ -2,10 +2,14 @@
 
 {% block body %}
 
-<form method = "POST" action = "/createStory">
-  Story Title: <input type = "text" name = "title"> <br>
-  Story Body: <input type = "text" name = "body"> <br>
-  <input type = "submit">
+<h2>Create a New Story</h2>
+
+<form name="create" method="POST" action="">
+  Title<br>
+  <input type="text" name="title"><br><br>
+  Body<br>
+  <textarea name="body" form="create">Enter text here...</textarea><br><br>
+  <input type="submit">
 </form>
 
 {% endblock %}

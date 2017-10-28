@@ -49,3 +49,6 @@ Finish login functionality
 siuR -- 2017-10-27 22:08:22
 Add flash messages to base
 
+siuR -- 2017-10-27 23:22:01
+Worked on HTML for creating stories
+

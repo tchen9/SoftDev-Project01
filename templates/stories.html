@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 
-    {% block body %}
+{% block body %}
 
-<h2>ALL Stories <br></h2>
-<input type="text" name="searchDB" value="Search!">
+<h2>Stories</h2>
+<form method="GET" action="">
+  Search
+  <input type="text" name="search">
+  <input type="submit">
+</form>
 
-
-story<br>
-
-story<br>
-story<br>
-story<br>
-story<br>
-story<br>
+<br><br>
+<table border="1">
+  <tr>
+    <td>Title</td>
+    <td>Last Contribution</td>
+    <td>Action</td>
+  </tr>
+  {% for story in stories %}
+  <tr>
+    <td>{{ stories[story]['title'] }}</td>
+    <td>{{ stories[story]['last_contribution'] }}</td>
+    <td><a href="{{ url_for('contribute') }}">Contribute</a></td>
+  </tr>
+  {% endfor %}
+</table>
 
 <h2>Create a NEW story</h2>
 <a href="{{ url_for('create_story') }}">Create a Story</a>!<br><br>
 
-    {% endblock %}
+{% endblock %}
 

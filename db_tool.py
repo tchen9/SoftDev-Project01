@@ -43,7 +43,7 @@ def add_user( username ):
     db.commit()
     db.close()
 
-    return int(user_id)
+    return user_id
 
 
 # add a story to the story table
@@ -142,6 +142,8 @@ def get_user_by_username( username ):
         user["id"] = row[0]
         user["password"] = row[1]
 
+    db.close()
+        
     return user
 
 
@@ -158,8 +160,8 @@ def get_users():
     command = "SELECT * FROM users;"
     for row in c.execute(command):
         user = {}
-        user[ "username" ] = row[1]
-        user[ "password" ] = row[2]
+        user[ 'username' ] = row[1]
+        user[ 'password' ] = row[2]
         users[ row[0] ] = user
 
     # commit and close the database
@@ -167,6 +169,34 @@ def get_users():
     db.close()
 
     return users
+
+
+# returns a dictionary with keys as story_ids and values as dictionaries for those stories
+def get_stories():
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    stories = {}
+
+    # get the data
+    command = "SELECT * FROM stories;"
+    for row in c.execute(command):
+        story = {}
+        story[ 'title' ] = row[1]
+        story[ 'body' ] = row[2]
+        story[ 'complete' ] = row[3]
+        stories[ row[0] ] = story
+
+    command = "SELECT * FROM contributions;"
+    for row in c.execute(command):
+        story = stories[ row[1] ]
+        story['last_contribution'] = row[2]
+        
+    db.close()
+
+    return stories
 
 
 # returns the username associated with a given user_id
