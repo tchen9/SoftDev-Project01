@@ -25,7 +25,7 @@ def make_database():
 
 
 # add a user to the users table
-def add_user( username, password ):
+def add_user( username ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
@@ -36,13 +36,14 @@ def add_user( username, password ):
         user_id = row[0]
 
     # do the command
-    command = "INSERT INTO users VALUES( %d, \"%s\", \"%s\" );" % (user_id, username, password)
+    command = "INSERT INTO users VALUES( %d, \"%s\", \"\" );" % (user_id, username)
     c.execute(command)
 
     # commit and close the database
     db.commit()
     db.close()
 
+    return int(user_id)
 
 
 # add a story to the story table
@@ -65,7 +66,7 @@ def add_story( title, body ):
     db.commit()
     db.close()
 
-
+    return story_id
 
 
 # add an edit to the contribution table AND update the story
@@ -101,7 +102,7 @@ def add_cont( user_id, story_id, addition ):
     # commit and close the database
     db.commit()
     db.close()
-
+    
 
 # returns a dictionary with fields as keys and values as the records for that user_id
 def get_user( user_id ):
@@ -120,7 +121,26 @@ def get_user( user_id ):
 
     # commit and close the database
     db.commit()
-    db.close()
+    db.close() 
+
+    return user
+
+
+# returns a dictionary with fields as keys and values as the records for that user_id
+def get_user_by_username( username ):
+    
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    user = {}
+
+    # get the user info
+    command = "SELECT user_id, password FROM users WHERE users.username = \"%s\";" % (username)
+    for row in c.execute(command):
+        user["id"] = row[0]
+        user["password"] = row[1]
 
     return user
 
@@ -167,7 +187,7 @@ def get_username( user_id ):
 
 
 # returns the password associated with a given user_id (hashed)
-def get_pass( user_id ):
+def get_password( user_id ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
@@ -217,6 +237,17 @@ def get_story_body( story_id ):
     return body
 
 
+# sets a user's password to the input
+def set_password(user_id, password):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+    
+    command = "UPDATE users SET password = \"%s\" WHERE users.user_id = %d;" % (password, user_id)
+    c.execute(command)
+
+    db.commit()
+    db.close()
 
 #===========================================================================================================
 
@@ -230,10 +261,13 @@ if __name__ == "__main__":
     # 2. Add the command bellow
     # 3. Run the file
 
-    add_user("bob", "pass")
-    add_user("jim", "random")
-    add_user("unknown", "bird")
-
+    user1 = add_user("bob")
+    set_password(user1, "test")
+    user2 = add_user("jim")
+    set_password(user2, "random")
+    user3 = add_user("unknown")
+    set_password(user3, "bird")
+    
     add_story("first story", "First line!")
     add_story("second story", "random text is fun!")
 

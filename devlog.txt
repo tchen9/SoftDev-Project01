@@ -43,3 +43,9 @@ Wrote accesor methods for user info
 goldmanJ -- 2017-10-27 14:20:21
 wrote accessor methods for stories
 
+siuR -- 2017-10-27 22:08:14
+Finish login functionality
+
+siuR -- 2017-10-27 22:08:22
+Add flash messages to base
+

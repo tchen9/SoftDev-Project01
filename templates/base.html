@@ -3,11 +3,21 @@
 <html>
   
   <head>
-    {% block title %}
-    {% endblock %}
+    <title>{{ title }}</title>
   </head>
 
   <body>
+    <h3>JART</h3>
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <hr>
+    <ul>
+      {% set messages = get_flashed_messages() %}
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    <hr>
     {% block body %}
     {% endblock %}
   </body>

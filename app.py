@@ -4,10 +4,11 @@ from auth import logged_in
 import db_tool
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "TH15 15 4 53CR3T K3Y"
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template('index.html', title = 'JART')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -28,8 +29,17 @@ def login():
             return redirect(url_for('login'))
 
     else:
-        return render_template('login.html')
+        return render_template('login.html', title = 'Login')
 
+@app.route('/logout')
+def logout():
+    if logged_in():
+        auth.logout()
+        flash('You have been logged out.')
+        return redirect(url_for('index'))
+    flash('You are not logged in!')
+    return redirect(url_for('login'))
+    
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     if logged_in():
@@ -49,19 +59,19 @@ def create_user():
             flash('This username already exists.')
             return redirect(url_for('create_user'))
     else:
-        return render_template('create_user.html')
+        return render_template('create_user.html', title = 'Create')
     
 @app.route('/profile')
 def profile():
-    return render_template("profile.html")
+    return render_template('profile.html', title = 'Profile')
 
 @app.route('/stories')
 def stories():
-    return render_template("stories.html")
+    return render_template('stories.html', title = 'Stories')
 
 @app.route('/create_story')
 def create_story():
-    return render_template("create_story.html")
+    return render_template('create_story.html', title = 'Create a Story')
 
 @app.route('/contribute')
 def contribute_story():
