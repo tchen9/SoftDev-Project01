@@ -61,3 +61,6 @@ Reorganize app.py code and begin contributions to story
 siuR -- 2017-10-29 13:29:49
 Finish adding contribution page
 
+siuR -- 2017-10-29 14:57:46
+Error handling and checking
+

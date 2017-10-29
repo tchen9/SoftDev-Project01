@@ -204,6 +204,25 @@ def get_stories():
     return stories
 
 
+def get_contribution( user_id, story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    cont = {}
+
+    # get the data
+    command = "SELECT timestamp, edit FROM contributions WHERE contributions.user_id = %d AND contributions.story_id = %d;" % (user_id, story_id)
+    for row in c.execute(command):
+        cont[ 'timestamp' ] = row[0]
+        cont[ 'edit' ] = row[1]
+            
+    db.close()
+
+    return cont
+
+
 # returns the username associated with a given user_id
 def get_username( user_id ):
     # open the database

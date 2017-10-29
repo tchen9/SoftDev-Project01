@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-from db_tool import get_stories, add_story, get_story, add_cont, get_story_title
+from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution
 
 
 app = Flask(__name__)
@@ -82,7 +82,11 @@ def profile():
 def stories():
     if logged_in():
         stories = get_stories()
-        return render_template('stories.html', title = 'Stories', stories = stories)
+        parsed_stories = {}
+        for story in stories:
+            if not get_contribution( session['user_id'], story ):
+                parsed_stories[story] = stories[story]
+        return render_template('stories.html', title = 'Stories', stories = parsed_stories)
     else:
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
@@ -109,8 +113,11 @@ def contribute(story_id = -1):
     if not logged_in():
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
+    if get_contribution( session['user_id'], story_id ):
+        flash('You have already contributed to this story.')
+        return redirect(url_for('stories'))
     if request.method == 'POST':
-        add_cont(session['user_id'], story_id, request.form['body'])
+        add_cont( session['user_id'], story_id, request.form['body'] )
         flash('You have contributed to "' + get_story_title(story_id) + '"!')
         return redirect(url_for('profile'))
     else:
