@@ -52,3 +52,6 @@ Add flash messages to base
 siuR -- 2017-10-27 23:22:01
 Worked on HTML for creating stories
 
+siuR -- 2017-10-28 22:22:02
+Rearrange UI elements
+

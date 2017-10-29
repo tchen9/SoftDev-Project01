@@ -25,9 +25,17 @@
       </style>
   </head>
   <body>
-    <h3>JART</h3>
-    <a href="{{ url_for('login') }}">Login</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <div class="scrollmenu">
+      <a href="{{ url_for('index') }}" class="active">JART</a>
+      {% if not session['user_id'] %}
+      <a href="{{ url_for('login') }}">Login</a>
+      {% else %}
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('stories') }}">Stories</a>
+      <a href="{{ url_for('create_story') }}">Create a Story</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </div>
     <hr>
     <ul>
       {% set messages = get_flashed_messages() %}
@@ -36,13 +44,6 @@
       {% endfor %}
     </ul>
     <hr>
-    
-    <div class="scrollmenu">
-      <a href="{{url_for('index')}}" class="active">Site Description</a>
-      <a href="{{url_for('profile')}}">Profile</a>
-      <a href="{{url_for('stories')}}">Stories</a>
-      <a href="{{url_for('create_story')}}">Create a Story</a>
-    </div>
     
     {% block body %}
     {% endblock %}
