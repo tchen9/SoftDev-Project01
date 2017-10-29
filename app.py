@@ -3,13 +3,16 @@ import auth
 from auth import logged_in
 from db_tool import get_stories, add_story, get_story, add_cont, get_story_title
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "TH15 15 4 53CR3T K3Y"
 
+#returns the JART site description page
 @app.route('/')
 def index():
     return render_template('index.html', title = 'JART')
 
+#checks username and password for authenticity
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if logged_in():
@@ -31,6 +34,7 @@ def login():
     else:
         return render_template('login.html', title = 'Login')
 
+#logs the user out and back to the JART page
 @app.route('/logout')
 def logout():
     if logged_in():
@@ -39,7 +43,8 @@ def logout():
         return redirect(url_for('index'))
     flash('You are not logged in!')
     return redirect(url_for('login'))
-    
+
+#creates a new user
 @app.route('/create_user', methods=['GET', 'POST'])
 def create_user():
     if logged_in():
@@ -60,15 +65,19 @@ def create_user():
             return redirect(url_for('create_user'))
     else:
         return render_template('create_user.html', title = 'Create')
-    
+
+#Home page for user after logging in
+#Can see contributions the user has made
 @app.route('/profile')
 def profile():
     if logged_in():
-        return render_template('profile.html', title = 'Profile')
+        nameUser = get_username(session['user_id'])
+        return render_template('profile.html', title = 'Profile', name = nameUser)
     else:
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
 
+#Displays list of recent stories 
 @app.route('/stories')
 def stories():
     if logged_in():
@@ -78,6 +87,7 @@ def stories():
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
 
+#form for user to create their own story by typing in title and body
 @app.route('/create_story', methods = ['GET', 'POST'])
 def create_story():
     if not logged_in():
