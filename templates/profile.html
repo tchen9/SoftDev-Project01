@@ -2,17 +2,30 @@
 
 {% block body %}
 
-<h1>Welcome {{name}}!</h1>
+<h1>Welcome {{ name }}!</h1>
 
 <h2>Stories You've Contributed To</h2>
 
-story<br>
-story<br>
-story<br>
-story<br>
-story<br>
-story<br>
-story<br><br>
-<h2>
+{% if stories %}
+<table border="1">
+  <tr>
+    <td>Title</td>
+    <td>Preview</td>
+    <td>Complete</td>
+    <td>Action</td>
+  </tr>
+  {% for story in stories %}
+  <tr>
+    <td>{{ stories[story]['title'] }}</td>
+    <td>{{ stories[story]['preview'] }}</td>
+    <td>{{ stories[story]['complete'] }}</td>
+    <td><a href="{{ url_for('view_story', story_id = story) }}">View</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>You haven't contributed to a story yet. <a href="{{ url_for('stories') }}">Contribute</a> or <a href="{{ url_for('create_story') }}">create</a> one!</p>
+{% endif %}
+
 
 {% endblock %}

@@ -64,3 +64,6 @@ Finish adding contribution page
 siuR -- 2017-10-29 14:57:46
 Error handling and checking
 
+siuR -- 2017-10-29 16:44:03
+Finish profile page
+

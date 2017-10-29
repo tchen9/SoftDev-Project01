@@ -50,7 +50,7 @@ def add_user( username ):
 
 # add a story to the story table
 # for now, always make completed = 0
-def add_story( title, body ):
+def add_story( title ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
@@ -61,7 +61,7 @@ def add_story( title, body ):
         story_id = row[0]
 
     # do the command
-    command = "INSERT INTO stories VALUES( %d, \"%s\", \"%s\", 0 );" % (story_id, title, body )
+    command = "INSERT INTO stories VALUES( %d, \"%s\", \"%s\", 0 );" % (story_id, title, '' )
     c.execute(command)
     
     # commit and close the database
@@ -204,6 +204,27 @@ def get_stories():
     return stories
 
 
+def get_contributions( user_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    conts = {}
+
+    # get the data
+    command = "SELECT * FROM contributions WHERE contributions.user_id = %d;" % (user_id)
+    for row in c.execute(command):
+        cont = {}
+        cont[ 'timestamp' ] = row[2]
+        cont[ 'edit' ] = row[3]
+        conts[ row[1] ] = cont
+
+    db.close()
+
+    return conts
+
+
 def get_contribution( user_id, story_id ):
     # open the database
     db = sqlite3.connect("app.db")
@@ -324,6 +345,23 @@ def get_story_body( story_id ):
     return body
 
 
+# returns the completeness associated with a given story_id
+def get_story_complete( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # get the username
+    command = "SELECT completed FROM stories WHERE stories.story_id = %d;" % (story_id)
+    for row in c.execute( command ):
+        complete = row[0]
+
+    # commit and close the database
+    db.commit()
+    db.close()
+    return complete
+
+
 # sets a user's password to the input
 def set_password(user_id, password):
     # open the database
@@ -355,15 +393,7 @@ if __name__ == "__main__":
     user3 = add_user("unknown")
     set_password(user3, "bird")
     
-    add_story("first story", "First line!")
-    add_story("second story", "random text is fun!")
-
-    add_cont(0, 0, "Second line!")
-    add_cont(1, 0, "Third line!")
-    add_cont(2, 0, "Fourth line!")
-
-
-'''
+    '''
     print( "Getting user 0:")
     print( get_user(0) )
 

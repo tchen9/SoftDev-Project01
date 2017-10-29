@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution
+from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution, get_contributions, get_story_body, get_story_complete
 
 
 app = Flask(__name__)
@@ -72,7 +72,18 @@ def create_user():
 def profile():
     if logged_in():
         nameUser = get_username(session['user_id'])
-        return render_template('profile.html', title = 'Profile', name = nameUser)
+        conts = get_contributions(session['user_id'])
+        stories = {}
+        for cont in conts:
+            story_id = cont
+            story = {}
+            story['title'] = get_story_title(story_id)
+            story['preview'] = get_story_body(story_id)[:198] + '...'
+            story['complete'] = get_story_complete(story_id)
+            stories[story_id] = story
+        print stories
+        print conts
+        return render_template('profile.html', title = 'Profile', name = nameUser, stories = stories)
     else:
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
@@ -100,7 +111,7 @@ def create_story():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
-        story_id = add_story(title, body)
+        story_id = add_story(title)
         add_cont(session['user_id'], story_id, body)
         flash('Story created successfully!')
         return redirect(url_for('profile'))
@@ -124,6 +135,17 @@ def contribute(story_id = -1):
         story = get_story(story_id)
         return render_template('edit_story.html', story = story)
 
+#displays last contribution and a form to add text
+@app.route('/view_story/<int:story_id>', methods = ['GET', 'POST'])
+def view_story(story_id = -1):
+    if not logged_in():
+        flash('You need to log in or create an account.')
+        return redirect(url_for('login'))
+    else:
+        story = get_story(story_id)
+        #return render_template('view_story.html', story = story)
+        return "hi"
+        
         
 if __name__ == '__main__':
     app.debug = True
