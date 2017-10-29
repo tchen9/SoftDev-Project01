@@ -2,4 +2,13 @@
 
 {% block body %}
 
+<h1>Last Contribution:</h1>
+{{last_contribution}}
+
+<form name="story" method="POST" action="">
+  <h2>Add to story:</h2> <br>
+  <textarea name="body" maxlength="200">Max:200 characters</textarea>
+  <input type="submit">
+</form>
+
 {% endblock %}
