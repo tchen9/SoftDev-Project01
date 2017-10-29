@@ -140,8 +140,9 @@ def view_story(story_id = -1):
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
     else:
-        story = get_story(story_id)
-        #return render_template('view_story.html', story = story)
+        story = get_story_body(story_id)
+        title = get_story_title(story_id)
+        return render_template('view_story.html', story = story, title = title)
         return "hi"
         
         
