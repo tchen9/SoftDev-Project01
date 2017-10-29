@@ -55,3 +55,6 @@ Worked on HTML for creating stories
 siuR -- 2017-10-28 22:22:02
 Rearrange UI elements
 
+siuR -- 2017-10-28 22:48:39
+Reorganize app.py code and begin contributions to story
+

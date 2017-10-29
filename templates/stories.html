@@ -20,7 +20,7 @@
   <tr>
     <td>{{ stories[story]['title'] }}</td>
     <td>{{ stories[story]['last_contribution'] }}</td>
-    <td><a href="{{ url_for('contribute') }}">Contribute</a></td>
+    <td><a href="{{ url_for('contribute', story_id = story) }}">Contribute</a></td>
   </tr>
   {% endfor %}
 </table>

@@ -78,45 +78,32 @@ def stories():
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
 
-#renders the template for create_story
 @app.route('/create_story', methods = ['GET', 'POST'])
 def create_story():
-    if logged_in():
-        return render_template('create_story.html', title = 'Create a Story')
-    else:
+    if not logged_in():
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
-
-#backend for adding story to the database
-@app.route('/story_added', methods = ['GET', 'POST'])
-def story_added():
-    if logged_in():
+    if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        print title
         add_story(title, body)
         flash('Story added successfully.')
-        return render_template('create_story.html')
+        return redirect(url_for('profile'))
     else:
-        flash('You need to log in or create an account.')
-        return redirect(url_for('login'))
+        return render_template('create_story.html', title = 'Create a Story')
 
 #displays last contribution and a form to add text
-@app.route('/contribute')
-def contribute():
-    if logged_in():
-        return render_template('story.html')
-    else:
+@app.route('/contribute/<int:story_id>', methods = ['GET', 'POST'])
+def contribute(story_id = -1):
+    if not logged_in():
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
-
-#backend for adding contribution
-@app.route('/story_contributed')
-def story_contributed():
-    if logged_in():
+    if request.method == 'POST':
         return "addcont"
     else:
-        flash('You need to log in or create an account.')
-        return redirect(url_for('login'))
+        return render_template('edit_story.html')
+
         
 if __name__ == '__main__':
     app.debug = True
