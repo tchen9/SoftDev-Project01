@@ -2,6 +2,7 @@ import sqlite3
 from datetime import datetime
 
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+MAX_CONTRIBUTIONS = 10
 
 # make the initial database
 def make_database():
@@ -96,8 +97,8 @@ def add_cont( user_id, story_id, addition ):
     command = "SELECT count(*) FROM contributions WHERE contributions.story_id = %d;" % ( story_id )
     for row in c.execute(command):
         count = row[0]
-    # if the number of contributions is >= 3, set the status to completed
-    if (count >= 3):
+    # if the number of contributions is >= MAX_CONTRIBUTIONS, set the status to completed
+    if (count >= MAX_CONTRIBUTIONS):
         command = "UPDATE stories SET completed = 1 WHERE stories.story_id = %d;" % ( story_id )
         c.execute(command)
 

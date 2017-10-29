@@ -81,8 +81,6 @@ def profile():
             story['preview'] = get_story_body(story_id)[:198] + '...'
             story['complete'] = get_story_complete(story_id)
             stories[story_id] = story
-        print stories
-        print conts
         return render_template('profile.html', title = 'Profile', name = nameUser, stories = stories)
     else:
         flash('You need to log in or create an account.')
