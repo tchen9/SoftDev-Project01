@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-from db_tool import get_stories, add_story
+from db_tool import get_stories, add_story, get_story, add_cont, get_story_title
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "TH15 15 4 53CR3T K3Y"
@@ -86,9 +86,9 @@ def create_story():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
-        print title
-        add_story(title, body)
-        flash('Story added successfully.')
+        story_id = add_story(title, body)
+        add_cont(session['user_id'], story_id, body)
+        flash('Story created successfully!')
         return redirect(url_for('profile'))
     else:
         return render_template('create_story.html', title = 'Create a Story')
@@ -100,9 +100,12 @@ def contribute(story_id = -1):
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
     if request.method == 'POST':
-        return "addcont"
+        add_cont(session['user_id'], story_id, request.form['body'])
+        flash('You have contributed to "' + get_story_title(story_id) + '"!')
+        return redirect(url_for('profile'))
     else:
-        return render_template('edit_story.html')
+        story = get_story(story_id)
+        return render_template('edit_story.html', story = story)
 
         
 if __name__ == '__main__':

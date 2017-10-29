@@ -2,4 +2,15 @@
 
 {% block body %}
 
+<h2>Contribute to {{ story['title'] }}</h2>
+
+<h3>Previous contribution</h3>
+<pre>{{ story['previous_contribution'] }}</pre>
+
+<form method="POST" action="">
+  <h3>Your contribution</h3>
+  <textarea name="body">Enter text here...</textarea><br><br>
+  <input type="submit">
+</form>
+
 {% endblock %}

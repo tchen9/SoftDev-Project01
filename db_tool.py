@@ -1,6 +1,8 @@
 import sqlite3
 from datetime import datetime
 
+DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+
 # make the initial database
 def make_database():
     db = sqlite3.connect("app.db")
@@ -61,7 +63,7 @@ def add_story( title, body ):
     # do the command
     command = "INSERT INTO stories VALUES( %d, \"%s\", \"%s\", 0 );" % (story_id, title, body )
     c.execute(command)
-
+    
     # commit and close the database
     db.commit()
     db.close()
@@ -76,7 +78,7 @@ def add_cont( user_id, story_id, addition ):
     c = db.cursor()
 
     # get the timestamp for the contribution
-    timestamp = str( datetime.now() )
+    timestamp = datetime.now().strftime(DATETIME_FORMAT)
 
     # making the actual contribution
     command = "INSERT INTO contributions VALUES( %d, %d, \"%s\", \"%s\" );" % (user_id, story_id, timestamp, addition )
@@ -190,9 +192,12 @@ def get_stories():
         stories[ row[0] ] = story
 
     command = "SELECT * FROM contributions;"
+    time = datetime(1,1,1)
     for row in c.execute(command):
         story = stories[ row[1] ]
-        story['last_contribution'] = row[2]
+        cont_time = datetime.strptime(row[2], DATETIME_FORMAT)
+        if cont_time > time:
+            story['last_contribution'] = row[2]
         
     db.close()
 
@@ -231,6 +236,39 @@ def get_password( user_id ):
     db.commit()
     db.close()
     return password
+
+
+def get_story( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    story = {}
+
+    # get the story info
+    command = "SELECT * FROM stories WHERE stories.story_id = %d;" % (story_id)
+    for row in c.execute(command):
+        story['title'] = row[1]
+        story['body'] = row[2]
+        story['complete'] = row[3]
+
+    command = "SELECT * FROM contributions WHERE contributions.story_id = %d;" % (story_id)
+    time = datetime(1,1,1)
+    for row in c.execute(command):
+        cont_time = datetime.strptime(row[2], DATETIME_FORMAT)
+        if cont_time > time:
+            time = cont_time
+            story['previous_contribution'] = row[3]
+
+    if time == datetime(1,1,1):
+        story['previous_contribution'] = ''
+            
+    # commit and close the database
+    db.commit()
+    db.close() 
+
+    return story
 
 
 # returns the title associated with a given story_id

@@ -58,3 +58,6 @@ Rearrange UI elements
 siuR -- 2017-10-28 22:48:39
 Reorganize app.py code and begin contributions to story
 
+siuR -- 2017-10-29 13:29:49
+Finish adding contribution page
+
