@@ -9,10 +9,10 @@ Changes between initial design and final project
 
 - Instead of having a button on the stories page to redirect to creating and contributing to stories, we have a header on every page that has links to creating stories and a stories page where you can choose to contribute.
 
-- "view_story.html" only displays title and story.
+- "view_story.html" only displays title and story and only can be viewed on the profile page.
 
-- In the sitemap, "create story" can be access from profile and stories instead of coming from stories.
+- In the sitemap, "create story" can be access from profile and stories instead of coming just from stories.
 
-- In the sitemap, we got rid of some features in the white boxs extending from stories and profile: profile information and picture.
+- In the sitemap, we got rid of some features in the white boxes extending from stories and profile: profile information and picture.
 
-- Of the stretches, we have completed the search functionality and stats for user contributions.
+- Of the stretches, we have completed stats for user contributions.

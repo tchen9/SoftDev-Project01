@@ -461,6 +461,9 @@ if __name__ == "__main__":
 
     jart9 = add_user('JART9')
     set_password(jart9, hash_pwd)
+
+    jart10 = add_user('JART10')
+    set_password(jart10, hash_pwd)
     
     story1 = add_story('Birds')
     add_cont(jart, story1, 'Birds are fascinating creatures.')
