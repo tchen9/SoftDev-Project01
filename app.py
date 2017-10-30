@@ -2,7 +2,7 @@ from flask import Flask, flash, render_template, request, session, redirect, url
 import auth
 from auth import logged_in
 from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution, get_user_contributions, get_story_body, get_story_complete, get_original_contribution, MAX_CONTRIBUTIONS, get_story_contributions
-
+import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "TH15 15 4 53CR3T K3Y"
@@ -79,7 +79,7 @@ def profile():
             story_id = cont
             story = {}
             story['title'] = get_story_title(story_id)
-            story['preview'] = get_story_body(story_id)[:198] + '...'
+            story['preview'] = get_story_body(story_id)[:200] + '...'
             story['complete'] = get_story_complete(story_id)
             stories[story_id] = story
         return render_template('profile.html', title = 'Profile', name = nameUser, stories = stories, num_conts = num_conts)
@@ -100,7 +100,11 @@ def stories():
                 if orig_cont:
                     creator = orig_cont['user_id']
                     parsed_stories[story]['creator'] = get_username(creator)
-        return render_template('stories.html', title = 'Stories', stories = parsed_stories)
+        if parsed_stories:
+            rand_story_id = random.randint(0, len(stories))
+            while rand_story_id not in parsed_stories:
+                rand_story_id = random.randint(0, len(stories))
+        return render_template('stories.html', title = 'Stories', stories = parsed_stories, rand_story_id = rand_story_id)
     else:
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
