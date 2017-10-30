@@ -13,6 +13,6 @@ Changes between initial design and final project
 
 - In the sitemap, "create story" can be access from profile and stories instead of coming from stories.
 
-- In the sitemap, we got rid of some features in the white boxs extending from stories and profile: random story and picture.
+- In the sitemap, we got rid of some features in the white boxs extending from stories and profile: profile information and picture.
 
 - Of the stretches, we have completed the search functionality and stats for user contributions.
