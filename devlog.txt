@@ -78,3 +78,6 @@ updated the readme
 
 siuR -- 2017-10-29 21:06:05
 Touch ups and added stats
+
+chenT -- 2017-10-29 21:12:12
+added changes.txt
