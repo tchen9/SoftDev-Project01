@@ -2,7 +2,7 @@
 Tina Chen, Ray Jones, Ryan Siu, Jake Goldman <br>
 Period 9
 
-##Instructions
+## Instructions
 
 In the terminal, type in:
 ```python
