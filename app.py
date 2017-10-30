@@ -1,7 +1,7 @@
 from flask import Flask, flash, render_template, request, session, redirect, url_for
 import auth
 from auth import logged_in
-from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution, get_contributions, get_story_body, get_story_complete
+from db_tool import get_stories, add_story, get_story, add_cont, get_story_title, get_username, get_contribution, get_user_contributions, get_story_body, get_story_complete, get_original_contribution, MAX_CONTRIBUTIONS, get_story_contributions
 
 
 app = Flask(__name__)
@@ -72,7 +72,8 @@ def create_user():
 def profile():
     if logged_in():
         nameUser = get_username(session['user_id'])
-        conts = get_contributions(session['user_id'])
+        conts = get_user_contributions(session['user_id'])
+        num_conts = len(conts)
         stories = {}
         for cont in conts:
             story_id = cont
@@ -81,7 +82,7 @@ def profile():
             story['preview'] = get_story_body(story_id)[:198] + '...'
             story['complete'] = get_story_complete(story_id)
             stories[story_id] = story
-        return render_template('profile.html', title = 'Profile', name = nameUser, stories = stories)
+        return render_template('profile.html', title = 'Profile', name = nameUser, stories = stories, num_conts = num_conts)
     else:
         flash('You need to log in or create an account.')
         return redirect(url_for('login'))
@@ -95,6 +96,10 @@ def stories():
         for story in stories:
             if not get_contribution( session['user_id'], story ):
                 parsed_stories[story] = stories[story]
+                orig_cont = get_original_contribution(story)
+                if orig_cont:
+                    creator = orig_cont['user_id']
+                    parsed_stories[story]['creator'] = get_username(creator)
         return render_template('stories.html', title = 'Stories', stories = parsed_stories)
     else:
         flash('You need to log in or create an account.')
@@ -131,7 +136,8 @@ def contribute(story_id = -1):
         return redirect(url_for('profile'))
     else:
         story = get_story(story_id)
-        return render_template('edit_story.html', story = story)
+        conts_left = MAX_CONTRIBUTIONS - len(get_story_contributions(story_id))
+        return render_template('edit_story.html', story = story, conts_left = conts_left)
 
 #displays last contribution and a form to add text
 @app.route('/view_story/<int:story_id>', methods = ['GET', 'POST'])
@@ -143,7 +149,6 @@ def view_story(story_id = -1):
         story = get_story_body(story_id)
         title = get_story_title(story_id)
         return render_template('view_story.html', story = story, title = title)
-        return "hi"
         
         
 if __name__ == '__main__':

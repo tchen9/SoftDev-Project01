@@ -2,8 +2,10 @@
 
 {% block body %}
 
-<h1>{{title}}</h1>
+<h1>{{ title }}</h1>
 
-{{story}}
+<pre>{{ story }}</pre>
+
+<button type="submit"><a href="{{ url_for('profile') }}">Back</a></button>
 
 {% endblock %}

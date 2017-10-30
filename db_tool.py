@@ -205,7 +205,7 @@ def get_stories():
     return stories
 
 
-def get_contributions( user_id ):
+def get_user_contributions( user_id ):
     # open the database
     db = sqlite3.connect("app.db")
     c = db.cursor()
@@ -220,6 +220,27 @@ def get_contributions( user_id ):
         cont[ 'timestamp' ] = row[2]
         cont[ 'edit' ] = row[3]
         conts[ row[1] ] = cont
+
+    db.close()
+
+    return conts
+
+
+def get_story_contributions( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    # create the dictionary to return
+    conts = {}
+
+    # get the data
+    command = "SELECT * FROM contributions WHERE contributions.story_id = %d;" % (story_id)
+    for row in c.execute(command):
+        cont = {}
+        cont[ 'timestamp' ] = row[2]
+        cont[ 'edit' ] = row[3]
+        conts[ row[0] ] = cont
 
     db.close()
 
@@ -245,6 +266,29 @@ def get_contribution( user_id, story_id ):
     return cont
 
 
+def get_original_contribution( story_id ):
+    # open the database
+    db = sqlite3.connect("app.db")
+    c = db.cursor()
+
+    story = {}
+    
+    command = "SELECT * FROM contributions WHERE contributions.story_id = %d;" % (story_id)
+    first_cont = True
+    for row in c.execute(command):
+        if first_cont:
+            time = datetime.strptime(row[2], DATETIME_FORMAT)
+            first_cont = False
+        cont_time = datetime.strptime(row[2], DATETIME_FORMAT)
+        if cont_time <= time:
+            story['user_id'] = row[0]
+            story['last_contribution'] = row[2]
+            story['edit'] = row[3]
+
+    db.close()
+            
+    return story
+            
 # returns the username associated with a given user_id
 def get_username( user_id ):
     # open the database
@@ -387,12 +431,23 @@ if __name__ == "__main__":
     # 2. Add the command bellow
     # 3. Run the file
 
-    user1 = add_user("bob")
-    set_password(user1, "test")
-    user2 = add_user("jim")
-    set_password(user2, "random")
-    user3 = add_user("unknown")
-    set_password(user3, "bird")
+    jart = add_user('JART')
+    set_password(jart, 'autogenerate')
+    
+    story1 = add_story('Birds')
+    add_cont(jart, story1, 'Birds are fascinating creatures.')
+
+    story2 = add_story('Google')
+    add_cont(jart, story2, 'Google is a well-known tech company.')
+
+    story3 = add_story('A Day at School')
+    add_cont(jart, story3, 'It was an uneventful day at school, when suddenly')
+
+    story4 = add_story('The Prince and the Princess')
+    add_cont(jart, story4, 'Once upon a time, there was a princess who lived in a castle.')
+
+    story5 = add_story('???')
+    add_cont(jart, story5, 'Darkness descended upon the world.')
     
     '''
     print( "Getting user 0:")

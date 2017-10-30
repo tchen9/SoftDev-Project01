@@ -67,3 +67,6 @@ Error handling and checking
 siuR -- 2017-10-29 16:44:03
 Finish profile page
 
+siuR -- 2017-10-29 21:06:05
+Touch ups and added stats
+

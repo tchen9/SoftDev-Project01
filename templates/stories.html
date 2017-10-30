@@ -13,6 +13,7 @@
 <table border="1">
   <tr>
     <td>Title</td>
+    <td>Creator</td>
     <td>Last Contribution</td>
     <td>Action</td>
   </tr>
@@ -20,6 +21,7 @@
   {% if not stories[story]['complete'] %}
   <tr>
     <td>{{ stories[story]['title'] }}</td>
+    <td>{{ stories[story]['creator'] }}</td>
     <td>{{ stories[story]['last_contribution'] }}</td>
     <td><a href="{{ url_for('contribute', story_id = story) }}">Contribute</a></td>
   </tr>
