@@ -13,3 +13,5 @@ In the web browser, type in the following to access the page:
 127.0.0:5000/
 
 Login to view, create, and contribute to stories.
+
+We autogenerate stories to start off with.

@@ -1,0 +1,18 @@
+JART
+Tina Chen, Ryan Siu, Jake Goldman, Ray Jones
+
+Changes between initial design and final project
+
+- We initially started off with a separate python file for creating a database and database methods, but then we decided it was better to combine the two into one file called "db_tool.py".
+
+- Rather than include name, birthday, and state, we just had the profile page welcome the user by his/her username.
+
+- Instead of having a button on the stories page to redirect to creating and contributing to stories, we have a header on every page that has links to creating stories and a stories page where you can choose to contribute.
+
+- "view_story.html" only displays title and story.
+
+- In the sitemap, "create story" can be access from profile and stories instead of coming from stories.
+
+- In the sitemap, we got rid of some features in the white boxs extending from stories and profile: random story and picture.
+
+- Of the stretches, we have completed the search functionality and stats for user contributions.
