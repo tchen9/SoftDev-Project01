@@ -6,14 +6,14 @@ Period 9
 
 ### Setup
 Run the db_tool script to create a sqlite3 database.
-```python
+```
 $ python db_tool.py
 ```
 This will automatically generate some test stories that can be used for demo purposes.
 
 ### Running
 In the terminal, run the app.py script.
-```python
+```
 $ python app.py
 ```
 
