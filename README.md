@@ -5,11 +5,7 @@ Period 9
 ## Instructions
 
 ### Setup
-Run the db_tool script to create a sqlite3 database.
-```
-$ python db_tool.py
-```
-This will automatically generate some test stories that can be used for demo purposes.
+A database with stories and users is pregenerated.
 
 ### Running
 In the terminal, run the app.py script.
