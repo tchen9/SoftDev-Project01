@@ -5,9 +5,9 @@ Period 9
 ##Instructions
 
 In the terminal, type in:
-'''python
+```python
 python app.py
-'''
+```
 
 In the web browser, type in the following to access the page:
 127.0.0:5000/
