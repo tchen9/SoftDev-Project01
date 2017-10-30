@@ -85,3 +85,6 @@ added changes.txt
 siuR -- 2017-10-29 21:21:16
 Added random story button
 
+siuR -- 2017-10-29 21:37:00
+Bug fixes and auto-generation of stories
+

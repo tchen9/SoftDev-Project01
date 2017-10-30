@@ -342,7 +342,7 @@ def get_story( story_id ):
     time = datetime(1,1,1)
     for row in c.execute(command):
         cont_time = datetime.strptime(row[2], DATETIME_FORMAT)
-        if cont_time > time:
+        if cont_time >= time:
             time = cont_time
             story['previous_contribution'] = row[3]
 
@@ -431,11 +431,44 @@ if __name__ == "__main__":
     # 2. Add the command bellow
     # 3. Run the file
 
+    # Generating db data
     jart = add_user('JART')
     set_password(jart, 'autogenerate')
+
+    jart2 = add_user('JART2')
+    set_password(jart2, 'autogenerate')
+
+    jart3 = add_user('JART3')
+    set_password(jart3, 'autogenerate')
+
+    jart4 = add_user('JART4')
+    set_password(jart4, 'autogenerate')
+
+    jart5 = add_user('JART5')
+    set_password(jart5, 'autogenerate')
+    
+    jart6 = add_user('JART6')
+    set_password(jart6, 'autogenerate')
+
+    jart7 = add_user('JART7')
+    set_password(jart7, 'autogenerate')
+
+    jart8 = add_user('JART8')
+    set_password(jart8, 'autogenerate')
+
+    jart9 = add_user('JART9')
+    set_password(jart9, 'autogenerate')
     
     story1 = add_story('Birds')
     add_cont(jart, story1, 'Birds are fascinating creatures.')
+    add_cont(jart2, story1, 'Like the rest of us, they are living beings.')
+    add_cont(jart3, story1, 'However, they cannot talk--instead, they chirp.')
+    add_cont(jart4, story1, 'To make up for this, they can fly on their own power, while we humans are left to comtemplate the wonders of flight.')
+    add_cont(jart5, story1, 'Scientists believe that the first birds evolved from dinosaurs.')
+    add_cont(jart6, story1, 'Evolution is also responsible for the many different types of birds we have today.')
+    add_cont(jart7, story1, 'Sadly, more and more birds are becoming extinct because of human pollution.')
+    add_cont(jart8, story1, 'Their natural habitats are being destroyed by logging.')
+    add_cont(jart9, story1, 'Still, birds remain one of the most admired types of animals.')
 
     story2 = add_story('Google')
     add_cont(jart, story2, 'Google is a well-known tech company.')
@@ -449,21 +482,4 @@ if __name__ == "__main__":
     story5 = add_story('???')
     add_cont(jart, story5, 'Darkness descended upon the world.')
     
-    '''
-    print( "Getting user 0:")
-    print( get_user(0) )
 
-    print( "Getting all users:" )
-    print( get_users() )
-
-    print( "Getting username for user 1:")
-    print( get_username(1) )
-
-    print( "Getting password for user 2:")
-    print( get_pass(2) )
-
-    print( "Getting title for story 0:" )
-    print( get_story_title(0) )
-    print( "Getting body for story 0:" )
-    print( get_story_body(0) )
-'''
