@@ -27,7 +27,7 @@
   <body>
     <div class="scrollmenu">
       <a href="{{ url_for('index') }}" class="active">JART</a>
-      {% if not session['user_id'] %}
+      {% if not session['user_id'] and session['user_id'] != 0 %}
       <a href="{{ url_for('login') }}">Login</a>
       {% else %}
       <a href="{{ url_for('profile') }}">Profile</a>

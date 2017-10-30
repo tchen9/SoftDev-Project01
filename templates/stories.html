@@ -9,10 +9,10 @@
   <input type="submit">
 </form>
 
+{% if stories %}
 <br><br>
 <button type="submit"><a href="{{ url_for('contribute', story_id = rand_story_id) }}">Random Story</a></button>
 <br><br>
-{% if stories %}
 <table border="1">
   <tr>
     <td>Title</td>

@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import hashlib
 
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 MAX_CONTRIBUTIONS = 10
@@ -432,32 +433,34 @@ if __name__ == "__main__":
     # 3. Run the file
 
     # Generating db data
+    hash_pwd = hashlib.sha224('autogenerate').hexdigest()
+    
     jart = add_user('JART')
-    set_password(jart, 'autogenerate')
+    set_password(jart, hash_pwd)
 
     jart2 = add_user('JART2')
-    set_password(jart2, 'autogenerate')
+    set_password(jart2, hash_pwd)
 
     jart3 = add_user('JART3')
-    set_password(jart3, 'autogenerate')
+    set_password(jart3, hash_pwd)
 
     jart4 = add_user('JART4')
-    set_password(jart4, 'autogenerate')
+    set_password(jart4, hash_pwd)
 
     jart5 = add_user('JART5')
-    set_password(jart5, 'autogenerate')
+    set_password(jart5, hash_pwd)
     
     jart6 = add_user('JART6')
-    set_password(jart6, 'autogenerate')
+    set_password(jart6, hash_pwd)
 
     jart7 = add_user('JART7')
-    set_password(jart7, 'autogenerate')
+    set_password(jart7, hash_pwd)
 
     jart8 = add_user('JART8')
-    set_password(jart8, 'autogenerate')
+    set_password(jart8, hash_pwd)
 
     jart9 = add_user('JART9')
-    set_password(jart9, 'autogenerate')
+    set_password(jart9, hash_pwd)
     
     story1 = add_story('Birds')
     add_cont(jart, story1, 'Birds are fascinating creatures.')

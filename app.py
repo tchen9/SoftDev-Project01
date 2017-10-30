@@ -70,6 +70,7 @@ def create_user():
 #Can see contributions the user has made
 @app.route('/profile')
 def profile():
+    print session['user_id']
     if logged_in():
         nameUser = get_username(session['user_id'])
         conts = get_user_contributions(session['user_id'])
@@ -100,6 +101,7 @@ def stories():
                 if orig_cont:
                     creator = orig_cont['user_id']
                     parsed_stories[story]['creator'] = get_username(creator)
+        rand_story_id = None
         if parsed_stories:
             rand_story_id = random.randint(0, len(stories))
             while rand_story_id not in parsed_stories:
@@ -141,7 +143,7 @@ def contribute(story_id = -1):
     else:
         story = get_story(story_id)
         conts_left = MAX_CONTRIBUTIONS - len(get_story_contributions(story_id))
-        return render_template('edit_story.html', story = story, conts_left = conts_left)
+        return render_template('edit_story.html', title = 'Contribute', story = story, conts_left = conts_left)
 
 #displays last contribution and a form to add text
 @app.route('/view_story/<int:story_id>', methods = ['GET', 'POST'])
